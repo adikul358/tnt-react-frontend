@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react"
 import SearchIcon from "./icons/SearchIcon"
 import CrossIcon from "./icons/CrossIcon"
 
