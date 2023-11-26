@@ -25,26 +25,26 @@ function Home() {
 
   useEffect(_ => {
     document.title = "Home | Thinking Of Not Thinking"
-    // axios.get("/api/articles?populate=*&sort[0]=createdAt:desc")
-    //     .then(function (res) { 
-    //       let articleData = []
-    //       for (let a of res.data.data) {
-    //         a = a.attributes
-    //         articleData.push({
-    //           heading: a.heading,
-    //           body: a.body,
-    //           thumbnail: a.thumbnail.data ? process.env.REACT_APP_STRAPI_HOST + a.thumbnail.data.attributes.url : "",
-    //           likes: a.likes,
-    //           views: a.views,
-    //           comments: a.comments.data.length,
-    //           date: a.publishedAt,
-    //           author: a.createdBy.firstname + (a.createdBy.lastname ? " " + a.createdBy.lastname : ""),
-    //           slug: a.slug
-    //         })
-    //       }
-    //       setArticles(articleData) 
-    //     })
-    //     .catch(function (err) { console.log(err) })
+    axios.get("/api/articles?populate=*&sort[0]=createdAt:desc")
+        .then(function (res) { 
+          let articleData = []
+          for (let a of res.data.data) {
+            a = a.attributes
+            articleData.push({
+              heading: a.heading,
+              body: a.body,
+              thumbnail: a.thumbnail.data ? process.env.REACT_APP_STRAPI_HOST + a.thumbnail.data.attributes.url : "",
+              likes: a.likes,
+              views: a.views,
+              comments: a.comments.data.length,
+              date: a.publishedAt,
+              author: a.createdBy.firstname + (a.createdBy.lastname ? " " + a.createdBy.lastname : ""),
+              slug: a.slug
+            })
+          }
+          setArticles(articleData) 
+        })
+        .catch(function (err) { console.log(err) })
   }, [])
 
 
