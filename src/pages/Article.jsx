@@ -15,8 +15,7 @@ import axios from "axios"
 export async function loader({ params }) {
   let res = await axios.get("/api/articles?populate=*&filters[slug][$eq]="+params.id)
   let a = res.data.data[0].attributes
-  console.dir(a)
-  return {
+  let base = {
     heading: a.heading,
     body: a.body,
     thumbnail: a.thumbnail.data ? process.env.REACT_APP_STRAPI_HOST + a.thumbnail.data.attributes.url : "",
@@ -27,6 +26,23 @@ export async function loader({ params }) {
     author: a.createdBy.firstname + (a.createdBy.lastname ? " " + a.createdBy.lastname : ""),
     slug: a.slug
   }
+  res = await axios.get("/api/articles?populate=*&sort[0]=createdAt:desc&pagination[page]=1&pagination[pageSize]=3&filters[slug][$ne]="+params.id)
+  let recent = []
+  for (let a of res.data.data) {
+    a = a.attributes
+    recent.push({
+      heading: a.heading,
+      body: a.body,
+      thumbnail: a.thumbnail.data ? process.env.REACT_APP_STRAPI_HOST + a.thumbnail.data.attributes.url : "",
+      likes: a.likes,
+      views: a.views,
+      comments: a.comments.data.length,
+      date: a.publishedAt,
+      author: a.createdBy.firstname + (a.createdBy.lastname ? " " + a.createdBy.lastname : ""),
+      slug: a.slug
+    })
+  }
+  return { ...base, recent }
 }
 
 function formatDate(date) {
@@ -43,32 +59,11 @@ function getReadingTime(body) {
 }
 
 function Article() {
-  const [recent, setRecent] = useState([])
-  const articleData = useLoaderData()
-  console.dir(articleData)
+  const {recent, ...articleData} = useLoaderData()
 
   useEffect(_ => {
-    axios.get("/api/articles?populate=*&sort[0]=createdAt:desc&pagination[page]=1&pagination[pageSize]=3")
-    .then(function (res) {
-      let data = []
-      for (let a of res.data.data) {
-        a = a.attributes
-        data.push({
-          heading: a.heading,
-          body: a.body,
-          thumbnail: a.thumbnail.data ? process.env.REACT_APP_STRAPI_HOST + a.thumbnail.data.attributes.url : "",
-          likes: a.likes,
-          views: a.views,
-          comments: a.comments.data.length,
-          date: a.publishedAt,
-          author: a.createdBy.firstname + (a.createdBy.lastname ? " " + a.createdBy.lastname : ""),
-          slug: a.slug
-        })
-      }
-      setRecent(data) 
-    })
-    document.title = "An Excerpt from a Memoir I Never Wrote (Pt 1)"
-  }, [])
+    document.title = articleData.heading
+  }, [articleData.heading])
 
   return (
     <>

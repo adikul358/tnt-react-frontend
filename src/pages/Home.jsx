@@ -25,7 +25,7 @@ function Home() {
 
   useEffect(_ => {
     document.title = "Home | Thinking Of Not Thinking"
-    axios.get("/api/articles?populate=*")
+    axios.get("/api/articles?populate=*&sort[0]=createdAt:desc")
         .then(function (res) { 
           let articleData = []
           for (let a of res.data.data) {
