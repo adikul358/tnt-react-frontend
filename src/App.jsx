@@ -13,45 +13,45 @@ function updateFavicon (path) {
 function App() {
   const [themeData, setThemeData] = useState({})
 
-  useEffect(_ => {
-    (async function () {
-      let base
-      let about
-      let quote
-      try {
-        let res = await axios.get(`/api/homepage?populate=*`)
-        base = {
-          logo: process.env.REACT_APP_STRAPI_HOST + res.data.data.attributes.logo.data.attributes.url,
-          subtitle: res.data.data.attributes.subtitle,
-          tagline: res.data.data.attributes.tagline,
-          byline: res.data.data.attributes.byline,
-          background: process.env.REACT_APP_STRAPI_HOST + res.data.data.attributes.background.data.attributes.url,
-          footerBackground: process.env.REACT_APP_STRAPI_HOST + res.data.data.attributes.footer_background.data.attributes.url,
-        }
-        updateFavicon(base.logo)
-      } catch (err) { console.log(err) }
+  // useEffect(_ => {
+  //   (async function () {
+  //     let base
+  //     let about
+  //     let quote
+  //     try {
+  //       let res = await axios.get(`/api/homepage?populate=*`)
+  //       base = {
+  //         logo: process.env.REACT_APP_STRAPI_HOST + res.data.data.attributes.logo.data.attributes.url,
+  //         subtitle: res.data.data.attributes.subtitle,
+  //         tagline: res.data.data.attributes.tagline,
+  //         byline: res.data.data.attributes.byline,
+  //         background: process.env.REACT_APP_STRAPI_HOST + res.data.data.attributes.background.data.attributes.url,
+  //         footerBackground: process.env.REACT_APP_STRAPI_HOST + res.data.data.attributes.footer_background.data.attributes.url,
+  //       }
+  //       updateFavicon(base.logo)
+  //     } catch (err) { console.log(err) }
       
-      try {
-        let res = await axios.get(`/api/about`)
-        about = {
-          heading: res.data.data.attributes.heading,
-          body: res.data.data.attributes.body.reduce((a, v1) => a + v1.children.filter(v => v !== "").map(v2 => v2.text).join(" ") + " ", "" ).replace(/\s+/g, " "),
-        }
-      } catch (err) { console.log(err) }
+  //     try {
+  //       let res = await axios.get(`/api/about`)
+  //       about = {
+  //         heading: res.data.data.attributes.heading,
+  //         body: res.data.data.attributes.body.reduce((a, v1) => a + v1.children.filter(v => v !== "").map(v2 => v2.text).join(" ") + " ", "" ).replace(/\s+/g, " "),
+  //       }
+  //     } catch (err) { console.log(err) }
 
-      try {
-        let res = await axios.get(`/api/quote?populate=*`)
-        quote = {
-          quote: res.data.data.attributes.quote,
-          author: res.data.data.attributes.author,
-          background: process.env.REACT_APP_STRAPI_HOST + res.data.data.attributes.background.data.attributes.url,
-        }
-      } catch (err) { console.log(err) }
+  //     try {
+  //       let res = await axios.get(`/api/quote?populate=*`)
+  //       quote = {
+  //         quote: res.data.data.attributes.quote,
+  //         author: res.data.data.attributes.author,
+  //         background: process.env.REACT_APP_STRAPI_HOST + res.data.data.attributes.background.data.attributes.url,
+  //       }
+  //     } catch (err) { console.log(err) }
 
-      setThemeData({...base, about, quote})
+  //     setThemeData({...base, about, quote})
 
-    })()
-  }, [])
+  //   })()
+  // }, [])
 
 
   return (
