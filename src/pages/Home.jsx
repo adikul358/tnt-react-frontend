@@ -14,7 +14,7 @@ function Home() {
       <div className="flex flex-col text-center items-center pt-[61px] pb-[57px]">
         <h1 className="font-mono text-[72px] leading-[90px] max-w-[780px] pb-[21px]">Thinking Of Not Thinking</h1>
         <p className="text-[20px] leading-[33.4px]">just two high school kids pouring their minds on the internet</p>
-        <p className="text-[20px] leading-[33.4px]">Leia (Aanya Dev Burman) x Luke (Abhimanyu Attrish)</p>
+        <p className="text-[20px] leading-[33.4px]">Leia (Aanya) x Luke (Abhimanyu)</p>
       </div>
 
       <div className="h-[320px] sm:h-[535px] bg-cover sm:bg-fixed bg-center" style={{backgroundImage: "url('/pic1.jpg')"}}></div>
